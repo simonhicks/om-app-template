@@ -1,21 +1,30 @@
 (ns {{name}}.core
   (:require [cemerick.austin.repls :refer (browser-connected-repl-js)]
-            [net.cgrand.enlive-html :as enlive]
             [compojure.route :refer (resources)]
             [compojure.core :refer (GET defroutes)]
             [clojure.string :as s]
             [ring.adapter.jetty :refer (run-jetty)]
-            [clojure.java.io :as io]))
+            [hiccup.page :refer (html5 include-css)]))
 
-(enlive/deftemplate page
-  (io/resource "index.html")
+(defn script [src]
+  [:script {:src src, :type "text/javascript"}])
+
+(defn new-page
   []
-  [:body] (enlive/append
-            (enlive/html [:script (browser-connected-repl-js)])))
+  (html5
+    [:head
+     (include-css "/css/styles.css")]
+    [:body
+     [:div#app]
+     (script "http://fb.me/react-0.9.0.js")
+     (script "out/goog/base.js")
+     (script "{{sanitized}}.js")
+     [:script {:type "text/javascript"}
+      "goog.require('{{sanitized}}.core');"]]))
 
 (defroutes site
   (resources "/")
-  (GET "/" req (page)))
+  (GET "/" req (new-page)))
 
 (defn run
   []

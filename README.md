@@ -1,10 +1,11 @@
 # om-app
 
-A Leiningen template for FIXME.
+A Leiningen template for om/compojure apps.
 
 ## Usage
 
-FIXME
+Clone this repo, run `lein install` and then you can run `lein new om-app foo` to generate a project called
+`foo`
 
 ## License
 

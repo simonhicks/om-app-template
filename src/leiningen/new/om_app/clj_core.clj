@@ -20,7 +20,9 @@
      (script "out/goog/base.js")
      (script "{{sanitized}}.js")
      [:script {:type "text/javascript"}
-      "goog.require('{{sanitized}}.core');"]]))
+      "goog.require('{{sanitized}}.core');"]
+     [:script {:type "text/javascript"}
+      (browser-connected-repl-js)]]))
 
 (defroutes site
   (resources "/")
